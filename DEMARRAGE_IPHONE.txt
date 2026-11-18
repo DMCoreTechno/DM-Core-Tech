@@ -1,0 +1,13 @@
+DM CORE CRM — prototype interactif V1
+
+IMPORTANT : ne pas ouvrir index.html dans l'aperçu de l'app Fichiers. Cet aperçu peut afficher une page statique et ne pas exécuter JavaScript.
+
+Pour l'utiliser sur iPhone :
+1. Décompresser le ZIP.
+2. Depuis un navigateur, publier le fichier index.html sur un hébergement statique HTTPS (GitHub Pages est une option gratuite).
+3. Ouvrir l'adresse HTTPS publiée dans Safari.
+4. Tester : + Ajouter un prospect, remplir le formulaire, Enregistrer. Le prospect doit apparaître dans la liste et le tableau de bord.
+
+Fonctions présentes : tableau de bord, ajout/modification/suppression de prospects, statuts, montants, échéances de relance, recherche, filtres, préparation d'un e-mail via l'application Mail, export JSON.
+
+Limites : les données sont stockées dans le navigateur de cet appareil (localStorage). Pas de compte utilisateur, de synchronisation cloud, d'envoi automatique, ni de paiement. Ne pas utiliser de vraies données clients sensibles dans ce prototype.

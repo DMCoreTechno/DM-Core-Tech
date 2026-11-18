@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#10233f">
+<title>DM CORE CRM — by DM CORE TECHNO</title>
+<style>
+:root{--navy:#10233f;--blue:#2463eb;--sky:#eaf1ff;--ink:#17243a;--muted:#64748b;--line:#e5eaf2;--bg:#f5f7fb;--green:#13865b;--amber:#a86408;--red:#b42318}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+button,input,select,textarea{font:inherit}button{cursor:pointer}
+.app{min-height:100vh;display:grid;grid-template-columns:250px 1fr}
+.sidebar{background:var(--navy);color:#fff;padding:25px 17px;display:flex;flex-direction:column;gap:26px}
+.brand{font-weight:850;letter-spacing:.08em;font-size:19px}.brand span{display:block;color:#9db8ff;font-size:10px;letter-spacing:.2em;margin-top:3px}
+.nav{display:grid;gap:7px}.nav button{border:0;background:transparent;color:#d4def0;text-align:left;padding:12px 13px;border-radius:10px;font-weight:600}.nav button.active,.nav button:hover{background:#203b62;color:white}
+.side-note{margin-top:auto;color:#aebed6;font-size:12px;border-top:1px solid #2b4262;padding-top:15px}
+main{padding:28px clamp(16px,3vw,42px);max-width:1500px;width:100%;margin:auto}
+.top{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:25px}.eyebrow{color:var(--blue);font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase}
+h1{font-size:clamp(25px,3vw,34px);margin:5px 0 4px;letter-spacing:-.04em}.sub{color:var(--muted);margin:0}
+.btn{border:0;border-radius:10px;padding:11px 15px;background:var(--blue);color:white;font-weight:750;box-shadow:0 5px 14px #2463eb25}.btn.secondary{background:white;color:var(--ink);border:1px solid var(--line);box-shadow:none}.btn.small{padding:7px 10px;font-size:12px}
+.cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px;margin-bottom:18px}.card,.panel{background:white;border:1px solid var(--line);border-radius:15px;padding:17px;box-shadow:0 4px 18px #182d4b08}
+.k-label{font-size:12px;color:var(--muted);font-weight:650}.k-value{font-size:27px;font-weight:850;letter-spacing:-.04em;margin-top:7px}.k-foot{font-size:11px;color:var(--muted);margin-top:3px}
+.layout{display:grid;grid-template-columns:1.5fr 1fr;gap:16px}.panel h2{font-size:16px;margin:0 0 13px}.panel-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px}
+table{width:100%;border-collapse:collapse}th{text-align:left;font-size:11px;color:var(--muted);font-weight:750;padding:10px 8px;border-bottom:1px solid var(--line)}td{padding:12px 8px;border-bottom:1px solid #eef1f6;font-size:13px}tr:last-child td{border-bottom:0}
+.pill{display:inline-flex;padding:4px 8px;border-radius:999px;background:#eef2f7;color:#46566e;font-size:11px;font-weight:750}.pill.new{background:#eaf1ff;color:#2455b5}.pill.sent{background:#fff3df;color:#945500}.pill.won{background:#e5f6ed;color:#087443}.pill.lost{background:#feeceb;color:#a52a24}
+.muted{color:var(--muted)}.empty{padding:28px;text-align:center;color:var(--muted);font-size:13px}
+.follow{display:grid;gap:10px}.follow-item{padding:12px;border:1px solid var(--line);border-radius:11px;display:flex;justify-content:space-between;gap:10px;align-items:center}.follow-item strong{font-size:13px}.follow-item small{display:block;color:var(--muted);margin-top:3px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field{display:grid;gap:5px}.field.full{grid-column:1/-1}.field label{font-size:12px;font-weight:750;color:#43516a}.field input,.field select,.field textarea{width:100%;border:1px solid #dce3ed;border-radius:9px;padding:10px 11px;background:white;color:var(--ink)}.field textarea{min-height:84px;resize:vertical}
+.modal{position:fixed;inset:0;background:#0c1a2e99;display:none;align-items:center;justify-content:center;padding:16px;z-index:5}.modal.open{display:flex}.dialog{background:white;border-radius:17px;padding:22px;width:min(570px,100%);max-height:90vh;overflow:auto;box-shadow:0 20px 80px #0003}.dialog-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}.dialog-head h2{margin:0}.close{border:0;background:#f0f3f8;border-radius:8px;padding:7px 10px}
+.toolbar{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:13px}.toolbar input,.toolbar select{border:1px solid var(--line);background:white;border-radius:9px;padding:9px 11px}
+.notice{border:1px solid #d8e5ff;background:#f1f6ff;color:#294b83;border-radius:12px;padding:12px 14px;font-size:12px;margin-bottom:16px}
+.page{display:none}.page.active{display:block}.actions{display:flex;gap:6px;flex-wrap:wrap}.text-btn{border:0;background:transparent;color:var(--blue);font-weight:750;font-size:12px;padding:4px}
+.mobile-head{display:none}
+@media(max-width:950px){.cards{grid-template-columns:repeat(2,1fr)}.layout{grid-template-columns:1fr}.app{grid-template-columns:210px 1fr}.sidebar{padding:20px 12px}}
+@media(max-width:680px){.app{display:block}.sidebar{display:none}main{padding:18px 14px 88px}.mobile-head{display:flex;justify-content:space-between;align-items:center;background:var(--navy);color:white;padding:13px 16px}.mobile-head .brand{font-size:16px}.mobile-nav{position:fixed;bottom:0;left:0;right:0;background:white;border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:7px 3px;z-index:4}.mobile-nav button{border:0;background:transparent;color:var(--muted);font-size:10px;padding:6px 4px;display:grid;gap:3px;justify-items:center}.mobile-nav button.active{color:var(--blue);font-weight:800}.top{align-items:flex-start}.top .btn{padding:9px 11px;font-size:12px}.cards{gap:9px}.card{padding:13px}.k-value{font-size:22px}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}table{min-width:620px}.table-wrap{overflow:auto}.panel{padding:14px}}
+</style>
+</head>
+<body>
+<div class="mobile-head"><div class="brand">DM CORE CRM <span>BY DM CORE TECHNO</span></div><button class="btn small" onclick="openLead()">+ Prospect</button></div>
+<div class="app">
+<aside class="sidebar">
+  <div class="brand">DM CORE CRM <span>BY DM CORE TECHNO</span></div>
+  <nav class="nav" id="sideNav">
+    <button class="active" data-page="dashboard">▦ &nbsp; Tableau de bord</button>
+    <button data-page="leads">◎ &nbsp; Prospects & devis</button>
+    <button data-page="followups">◷ &nbsp; Relances</button>
+    <button data-page="settings">⚙ &nbsp; Paramètres</button>
+  </nav>
+  <div class="side-note">DM CORE CRM · Version prototype<br>© DM CORE TECHNO</div>
+</aside>
+<main>
+  <section class="top">
+    <div><div class="eyebrow">DM CORE TECHNO · CRM COMMERCIAL</div><h1 id="pageTitle">Tableau de bord</h1><p class="sub" id="pageSub">Pilotez vos prospects, devis et prochaines actions.</p></div>
+    <button class="btn" onclick="openLead()">+ Ajouter un prospect</button>
+  </section>
+  <div class="notice"><strong>Prototype :</strong> les relances sont préparées dans l'application mais aucun e-mail/SMS n'est envoyé automatiquement. Une connexion serveur et un fournisseur d'envoi seront nécessaires pour la version réelle.</div>
+
+  <section class="page active" id="page-dashboard">
+    <div class="cards">
+      <div class="card"><div class="k-label">Prospects actifs</div><div class="k-value" id="kActive">0</div><div class="k-foot">Nouveaux + devis envoyés</div></div>
+      <div class="card"><div class="k-label">Valeur des devis ouverts</div><div class="k-value" id="kPipeline">0 €</div><div class="k-foot">Montants non encore gagnés</div></div>
+      <div class="card"><div class="k-label">Ventes gagnées</div><div class="k-value" id="kWon">0 €</div><div class="k-foot">Valeur des opportunités gagnées</div></div>
+      <div class="card"><div class="k-label">Relances à faire</div><div class="k-value" id="kDue">0</div><div class="k-foot">Échéances aujourd'hui ou dépassées</div></div>
+    </div>
+    <div class="layout">
+      <div class="panel"><div class="panel-head"><h2>Dernières opportunités</h2><button class="text-btn" onclick="showPage('leads')">Tout voir →</button></div><div class="table-wrap"><table><thead><tr><th>Prospect</th><th>Entreprise</th><th>Montant</th><th>Statut</th></tr></thead><tbody id="recentRows"></tbody></table></div></div>
+      <div class="panel"><h2>Prochaines relances</h2><div class="follow" id="dashboardFollow"></div></div>
+    </div>
+  </section>
+
+  <section class="page" id="page-leads">
+    <div class="panel">
+      <div class="panel-head"><h2>Prospects & devis</h2><button class="btn small" onclick="openLead()">+ Ajouter</button></div>
+      <div class="toolbar"><input id="search" placeholder="Rechercher un prospect..." oninput="renderLeads()"><select id="filter" onchange="renderLeads()"><option value="">Tous les statuts</option><option>Nouveau</option><option>Devis envoyé</option><option>Gagné</option><option>Perdu</option></select></div>
+      <div class="table-wrap"><table><thead><tr><th>Prospect</th><th>Entreprise</th><th>E-mail</th><th>Montant</th><th>Statut</th><th>Prochaine relance</th><th>Actions</th></tr></thead><tbody id="leadRows"></tbody></table></div>
+    </div>
+  </section>
+
+  <section class="page" id="page-followups">
+    <div class="panel"><div class="panel-head"><h2>Centre de relances</h2><span class="pill sent">Préparées — envoi manuel</span></div><p class="muted" style="font-size:13px">Les relances arrivées à échéance apparaissent ici. Tu peux préparer un message et l'ouvrir dans ton application e-mail. N'envoie un message qu'aux contacts pour lesquels tu as une base légale et les autorisations nécessaires.</p><div class="follow" id="allFollow"></div></div>
+  </section>
+
+  <section class="page" id="page-settings">
+    <div class="panel"><h2>Paramètres de démonstration</h2><p class="muted">Les données restent enregistrées dans le stockage local du navigateur sur cet appareil. Elles ne sont ni synchronisées ni sauvegardées sur un serveur.</p><div class="actions"><button class="btn secondary" onclick="exportData()">Exporter mes données JSON</button><button class="btn secondary" onclick="loadDemo()">Charger des exemples</button><button class="btn secondary" onclick="resetData()">Réinitialiser</button></div><hr style="border:0;border-top:1px solid var(--line);margin:18px 0"><h2>À connecter pour une vraie mise en production</h2><ul class="muted" style="font-size:13px;line-height:1.8"><li>Authentification et base de données hébergée.</li><li>Envoi d'e-mails via un fournisseur transactionnel.</li><li>Planificateur serveur pour les relances.</li><li>Paiements récurrents et gestion des abonnements.</li><li>Consentement, désinscription, journal d'envoi et conformité RGPD.</li></ul></div>
+  </section>
+</main>
+</div>
+<nav class="mobile-nav" id="mobileNav">
+  <button class="active" data-page="dashboard">▦<span>Accueil</span></button><button data-page="leads">◎<span>Prospects</span></button><button data-page="followups">◷<span>Relances</span></button><button data-page="settings">⚙<span>Réglages</span></button>
+</nav>
+
+<div class="modal" id="leadModal"><div class="dialog">
+  <div class="dialog-head"><h2 id="modalTitle">Ajouter un prospect</h2><button class="close" onclick="closeModal()">✕</button></div>
+  <form id="leadForm" class="form-grid">
+    <input type="hidden" id="leadId">
+    <div class="field"><label for="name">Nom du contact *</label><input id="name" required maxlength="100" placeholder="Ex. Camille Martin"></div>
+    <div class="field"><label for="company">Entreprise</label><input id="company" maxlength="120" placeholder="Ex. Atelier Martin"></div>
+    <div class="field"><label for="email">E-mail</label><input id="email" type="email" maxlength="160" placeholder="contact@entreprise.fr"></div>
+    <div class="field"><label for="amount">Montant du devis (€)</label><input id="amount" type="number" min="0" step="0.01" value="0"></div>
+    <div class="field"><label for="status">Statut</label><select id="status"><option>Nouveau</option><option>Devis envoyé</option><option>Gagné</option><option>Perdu</option></select></div>
+    <div class="field"><label for="due">Prochaine relance</label><input id="due" type="date"></div>
+    <div class="field full"><label for="notes">Notes / contexte</label><textarea id="notes" maxlength="1000" placeholder="Besoin identifié, prochaine étape..."></textarea></div>
+    <div class="field full"><button class="btn" type="submit">Enregistrer le prospect</button></div>
+  </form>
+</div></div>
+
+<script>
+const KEY='dm_core_crm_demo_v1';
+let leads=[];
+const $=id=>document.getElementById(id);
+const euro=n=>new Intl.NumberFormat('fr-FR',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(Number(n)||0);
+const today=()=>new Date().toISOString().slice(0,10);
+function save(){localStorage.setItem(KEY,JSON.stringify(leads));render()}
+function load(){try{leads=JSON.parse(localStorage.getItem(KEY)||'[]')}catch{leads=[]}render()}
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function pill(s){let cl=s==='Gagné'?'won':s==='Perdu'?'lost':s==='Devis envoyé'?'sent':'new';return `<span class="pill ${cl}">${esc(s)}</span>`}
+function dueItems(){return leads.filter(x=>x.due && x.status!=='Gagné'&&x.status!=='Perdu').sort((a,b)=>a.due.localeCompare(b.due))}
+function render(){
+ const active=leads.filter(x=>!['Gagné','Perdu'].includes(x.status));
+ $('kActive').textContent=active.length;
+ $('kPipeline').textContent=euro(active.reduce((s,x)=>s+(+x.amount||0),0));
+ $('kWon').textContent=euro(leads.filter(x=>x.status==='Gagné').reduce((s,x)=>s+(+x.amount||0),0));
+ $('kDue').textContent=dueItems().filter(x=>x.due<=today()).length;
+ $('recentRows').innerHTML=leads.slice().sort((a,b)=>b.updated-a.updated).slice(0,5).map(x=>`<tr><td><strong>${esc(x.name)}</strong></td><td>${esc(x.company||'—')}</td><td>${euro(x.amount)}</td><td>${pill(x.status)}</td></tr>`).join('')||`<tr><td colspan="4" class="empty">Aucun prospect. Ajoute ton premier contact.</td></tr>`;
+ $('dashboardFollow').innerHTML=followHtml(dueItems().slice(0,4));
+ renderLeads();
+ $('allFollow').innerHTML=followHtml(dueItems())||'<div class="empty">Aucune relance programmée.</div>';
+}
+function followHtml(items){return items.map(x=>`<div class="follow-item"><div><strong>${esc(x.name)} — ${esc(x.company||'Sans entreprise')}</strong><small>${x.due<=today()?'À traiter':'Prévue le '+new Date(x.due+'T12:00:00').toLocaleDateString('fr-FR')} · ${euro(x.amount)}</small></div><div class="actions"><button class="text-btn" onclick="prepareMail('${x.id}')">Préparer e-mail</button><button class="text-btn" onclick="editLead('${x.id}')">Modifier</button></div></div>`).join('')||'<div class="empty">Aucune relance programmée.</div>'}
+function renderLeads(){
+ const q=($('search')?.value||'').toLowerCase(),f=$('filter')?.value||'';
+ const rows=leads.filter(x=>(!f||x.status===f)&&[x.name,x.company,x.email].join(' ').toLowerCase().includes(q));
+ $('leadRows').innerHTML=rows.map(x=>`<tr><td><strong>${esc(x.name)}</strong></td><td>${esc(x.company||'—')}</td><td>${esc(x.email||'—')}</td><td>${euro(x.amount)}</td><td>${pill(x.status)}</td><td>${x.due?new Date(x.due+'T12:00:00').toLocaleDateString('fr-FR'):'—'}</td><td><div class="actions"><button class="text-btn" onclick="editLead('${x.id}')">Modifier</button><button class="text-btn" onclick="deleteLead('${x.id}')">Supprimer</button></div></td></tr>`).join('')||`<tr><td colspan="7" class="empty">Aucun résultat.</td></tr>`;
+}
+function openLead(){ $('leadForm').reset();$('leadId').value='';$('modalTitle').textContent='Ajouter un prospect';$('amount').value=0;$('leadModal').classList.add('open')}
+function closeModal(){$('leadModal').classList.remove('open')}
+function editLead(id){const x=leads.find(y=>y.id===id);if(!x)return;openLead();$('modalTitle').textContent='Modifier le prospect';$('leadId').value=x.id;$('name').value=x.name;$('company').value=x.company||'';$('email').value=x.email||'';$('amount').value=x.amount||0;$('status').value=x.status;$('due').value=x.due||'';$('notes').value=x.notes||''}
+function deleteLead(id){if(confirm('Supprimer ce prospect ?')){leads=leads.filter(x=>x.id!==id);save()}}
+$('leadForm').addEventListener('submit',e=>{e.preventDefault();const id=$('leadId').value;const item={id:id||crypto.randomUUID(),name:$('name').value.trim(),company:$('company').value.trim(),email:$('email').value.trim(),amount:+$('amount').value||0,status:$('status').value,due:$('due').value,notes:$('notes').value.trim(),updated:Date.now()};if(!item.name)return;if(id)leads=leads.map(x=>x.id===id?item:x);else leads.unshift(item);closeModal();save()});
+function prepareMail(id){const x=leads.find(y=>y.id===id);if(!x||!x.email){alert('Ajoute une adresse e-mail au contact pour préparer un message.');return}const subject=encodeURIComponent('Suite à votre devis');const body=encodeURIComponent(`Bonjour ${x.name},\n\nJe me permets de revenir vers vous concernant le devis de ${euro(x.amount)}. Avez-vous eu le temps de l'étudier ? Je reste disponible pour répondre à vos questions.\n\nBien cordialement`);location.href=`mailto:${encodeURIComponent(x.email)}?subject=${subject}&body=${body}`}
+function showPage(page){document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));$('page-'+page).classList.add('active');document.querySelectorAll('[data-page]').forEach(x=>x.classList.toggle('active',x.dataset.page===page));const meta={dashboard:['Tableau de bord','Pilotez vos prospects, devis et prochaines actions.'],leads:['Prospects & devis','Centralisez les contacts et suivez vos opportunités.'],followups:['Relances','Repérez les relances dues et préparez vos messages.'],settings:['Paramètres','Gérez les données locales de votre prototype.']};$('pageTitle').textContent=meta[page][0];$('pageSub').textContent=meta[page][1];}
+document.querySelectorAll('[data-page]').forEach(b=>b.addEventListener('click',()=>showPage(b.dataset.page)));
+function loadDemo(){leads=[{id:crypto.randomUUID(),name:'Sophie Bernard',company:'Studio Nova',email:'sophie@example.com',amount:890,status:'Devis envoyé',due:today(),notes:'Exemple fictif',updated:Date.now()},{id:crypto.randomUUID(),name:'Thomas Petit',company:'Atelier TP',email:'thomas@example.com',amount:1450,status:'Nouveau',due:today(),notes:'Exemple fictif',updated:Date.now()-1000},{id:crypto.randomUUID(),name:'Léa Moreau',company:'LM Conseil',email:'lea@example.com',amount:590,status:'Gagné',due:'',notes:'Exemple fictif',updated:Date.now()-2000}];save()}
+function resetData(){if(confirm('Effacer toutes les données locales ?')){leads=[];save()}}
+function exportData(){const blob=new Blob([JSON.stringify({exportedAt:new Date().toISOString(),leads},null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='dm-core-crm-donnees.json';a.click();URL.revokeObjectURL(a.href)}
+load();
+</script>
+</body></html>
